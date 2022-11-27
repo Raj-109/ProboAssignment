@@ -16,7 +16,6 @@ const getAccountData = () => {
   return JSON.parse(jsonData);
 };
 
-
 //Add jobId and JobValue
 accountRoutes.post("/add", (req, res) => {
   var existAccounts = getAccountData();
@@ -28,9 +27,8 @@ accountRoutes.post("/add", (req, res) => {
   console.log(existAccounts);
 
   saveAccountData(existAccounts);
-  res.send({ success: true, "stat":ok }).status(200);
+  res.send({ success: true, stat: "ok" }).status(200);
 });
-
 
 //Get data through Jobvalue
 accountRoutes.get("/all", (req, res) => {
@@ -41,7 +39,6 @@ accountRoutes.get("/all", (req, res) => {
     (err, data) => {
       let accountId = req.body.JobValue;
       const allkeys = Object.keys(existAccounts);
-      console.log(allkeys[0]);
 
       const arr = [];
       for (let i = 0; i < allkeys.length; i++) {
@@ -50,7 +47,7 @@ accountRoutes.get("/all", (req, res) => {
         }
       }
 
-      res.send("account found"`${arr}`).status(200);
+      res.send(arr);
     },
     true
   );
@@ -66,7 +63,6 @@ accountRoutes.post("/remove", (req, res) => {
 
       const bodyjobId = req.body.JobId;
       const allkeys = Object.keys(existAccounts);
-      console.log(existAccounts[allkeys[0]].JobId);
 
       for (let i = 0; i < allkeys.length; i++) {
         if (existAccounts[allkeys[i]].JobId == bodyjobId) {
@@ -74,13 +70,12 @@ accountRoutes.post("/remove", (req, res) => {
           saveAccountData(existAccounts);
         }
       }
-
-      console.log(existAccounts);
-
-      res.send({
-        "isSuccess":true,
-        "stat":"Ok"
-      }).status(200);
+      res
+        .send({
+          isSuccess: true,
+          stat: "Ok",
+        })
+        .status(200);
     },
     true
   );
